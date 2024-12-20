@@ -5,3 +5,4 @@ pydantic
 networkx 
 plotly
 numpy
+bcrypt
