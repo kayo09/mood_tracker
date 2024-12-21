@@ -6,3 +6,6 @@ networkx
 plotly
 numpy
 bcrypt
+passlib
+email_validator
+jose
