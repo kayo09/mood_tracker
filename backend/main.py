@@ -54,8 +54,8 @@ def register(user: UserCreate,db: Session=Depends(get_db)):
         db.refresh(db_user)
         return db_user
     except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=400,detail="Something went wrong")
+        # db.rollback()
+        raise HTTPException(status_code=400,detail=e)
 
 @app.post("/login/", response_model=LoginResponse)
 def login(form_data: OAuth2PasswordRequestForm=Depends(), db: Session=Depends(get_db)):
