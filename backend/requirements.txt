@@ -9,3 +9,4 @@ bcrypt
 passlib
 email_validator
 jose
+fastapi-mail

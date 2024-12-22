@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, Table
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from database import Base 
 from datetime import datetime
@@ -11,6 +11,7 @@ class User(Base):
     email=Column(String,unique=True,index=True,nullable=False)
     hashed_password=Column(String,nullable=False)
     created_at=Column(DateTime,default=datetime.utcnow)
+    is_verified=Column(Boolean,default=False)
     # updated_at=Column(DateTime,default=datetime.utcnow)
 
     journal_entries=relationship("JournalEntry",back_populates="user")
