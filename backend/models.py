@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, Bool
 from sqlalchemy.orm import relationship
 from database import Base 
 from datetime import datetime
+from typing import Optional
 
 class User(Base):
     __tablename__="users"
@@ -12,7 +13,6 @@ class User(Base):
     hashed_password=Column(String,nullable=False)
     created_at=Column(DateTime,default=datetime.utcnow)
     is_verified=Column(Boolean,default=False)
-    # updated_at=Column(DateTime,default=datetime.utcnow)
 
     journal_entries=relationship("JournalEntry",back_populates="user")
 
@@ -22,7 +22,7 @@ class JournalEntry(Base):
     id=Column(Integer,primary_key=True,index=True)
     date_time=Column(DateTime,default=datetime.utcnow)
     emotion=Column(String,index=True)
-    text=Column(Text)
+    notes=Column(String,index=True)
     user_id=Column(Integer,ForeignKey("users.id"))
 
     user=relationship("User",back_populates="journal_entries")
