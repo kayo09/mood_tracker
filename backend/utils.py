@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from jose import jwt, JWTError
 from itsdangerous import URLSafeTimedSerializer
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
+from fastapi import Depends
 from config import settings
 
 # Token serializer
@@ -84,3 +85,24 @@ async def send_verification_email(email: str, token: str):
     )
     fm = FastMail(conf)
     await fm.send_message(message)
+
+from fastapi import HTTPException, status
+from jose import JWTError, jwt
+
+def decode_access_token(token: str):
+    """
+    Decode and validate the access token.
+    """
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+        return email
+    except JWTError:
+        raise credentials_exception
