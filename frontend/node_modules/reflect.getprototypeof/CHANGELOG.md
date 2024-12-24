@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.0.9](https://github.com/es-shims/Reflect.getPrototypeOf/compare/v1.0.8...v1.0.9) - 2024-12-18
+
+### Commits
+
+- [Fix] avoid a crash with node `--disable-proto=throw` flag [`73f449d`](https://github.com/es-shims/Reflect.getPrototypeOf/commit/73f449dff08fe574a4cd937d7265aceb1774de05)
+- [Deps] update `dunder-proto`, `es-abstract`, `get-intrinsic`, `which-builtin-type` [`80c8227`](https://github.com/es-shims/Reflect.getPrototypeOf/commit/80c8227aac6cef446ac8460f8bbdd9a83bd1d131)
+
 ## [v1.0.8](https://github.com/es-shims/Reflect.getPrototypeOf/compare/v1.0.7...v1.0.8) - 2024-12-06
 
 ### Commits

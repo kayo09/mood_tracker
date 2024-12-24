@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
-from models import User
+from models import User, JournalEntry
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -28,3 +28,9 @@ def verify_user_email(db: Session, email: str):
         db.commit()
         return user
     return None
+
+def create_journal_entry(db: Session, user_id: int, emotion: str, notes: str):
+    db_entry = JournalEntry(user_id=user_id, emotion=emotion, notes=notes)
+    db.add(db_entry)
+    db.flush()
+    return db_entry

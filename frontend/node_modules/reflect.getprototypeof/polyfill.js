@@ -6,7 +6,14 @@ var $TypeError = require('es-errors/type');
 
 var implementation = require('./implementation');
 
-var hasProto = [].__proto__ === Array.prototype; // eslint-disable-line no-proto
+var hasProto;
+try {
+	hasProto = [].__proto__ === Array.prototype; // eslint-disable-line no-proto
+} catch (e) {
+	if (!e || typeof e !== 'object' || !('code' in e) || e.code !== 'ERR_PROTO_ACCESS') {
+		throw e;
+	}
+}
 
 var getDunder = require('dunder-proto/get');
 

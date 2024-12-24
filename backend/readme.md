@@ -24,6 +24,9 @@ The backend service documentation for Mood Calendar
 ## Endpoints
 1. `POST /add_entry/`: Add a journal entry.
 2. `GET /entries/`: Retrieve all entries.
+3. `POST /register/`: Registers a new user
+4. `POST /login/`: Logs-in User (also check `/verify`)
+5. `GET /entries/`: Gets all the journal entries of the logged-in User
 
 ## Emotion Classification 
 

@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, Bool
 from sqlalchemy.orm import relationship
 from database import Base 
 from datetime import datetime
-from typing import Optional
 
 class User(Base):
     __tablename__="users"
@@ -17,12 +16,13 @@ class User(Base):
     journal_entries=relationship("JournalEntry",back_populates="user")
 
 class JournalEntry(Base):
-    __tablename__="journal_entries"
+    __tablename__="mood"
 
     id=Column(Integer,primary_key=True,index=True)
     date_time=Column(DateTime,default=datetime.utcnow)
     emotion=Column(String,index=True)
     notes=Column(String,index=True)
     user_id=Column(Integer,ForeignKey("users.id"))
+    created_at=Column(DateTime,default=datetime.utcnow)
 
     user=relationship("User",back_populates="journal_entries")

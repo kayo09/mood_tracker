@@ -2,9 +2,10 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from database import SessionLocal
-from schemas import UserCreate, UserResponse, LoginResponse
-from crud import create_user, get_user_by_email, verify_password, verify_user_email
+from schemas import UserCreate, UserResponse, LoginResponse, JournalEntryResponse, JournalEntryCreate
+from crud import create_user, get_user_by_email, verify_password, verify_user_email, create_journal_entry
 from utils import create_access_token, validate_password, send_verification_email, generate_verification_token, verify_token, decode_access_token
+from models import User, JournalEntry
 
 
 app = FastAPI()
@@ -64,7 +65,7 @@ async def get_current_user(
     Validate the access token and fetch the authenticated user from the database.
     """
     email = decode_access_token(token)
-    user = get_user_by_email(db, email)
+    user: User = get_user_by_email(db, email)
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -73,6 +74,25 @@ async def get_current_user(
         )
     return user
 
-@app.get("/users/me", response_model=UserResponse)
-def read_users_me(user: dict = Depends(get_current_user)):
-    return user
+# @app.get("/users/me", response_model=UserResponse)
+# def read_users_me(user: dict = Depends(get_current_user)):
+#     return user
+
+@app.post("/add_entry/",response_model=JournalEntryResponse)
+def add_journal_entry(entry: JournalEntryCreate, db: Session= Depends(get_db),current_user: dict=Depends(get_current_user)):
+    if not current_user:
+        raise HTTPException(status_code=401,detail="User not authenticated")
+    new_entry=create_journal_entry(db, current_user.id, entry.emotion, entry.notes)
+    try:
+        db.commit()
+        return new_entry
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=400, detail="Error occurred while journaling")
+
+@app.get("/entries/",response_model=list[JournalEntryResponse])
+def get_journal_entries(db: Session=Depends(get_db),current_user: dict=Depends(get_current_user)):
+    if not current_user:
+        raise HTTPException(status_code=401,detail="User not authenticated")
+    entries=db.query(JournalEntry).filter(JournalEntry.user_id==current_user.id).all()
+    return entries
