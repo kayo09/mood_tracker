@@ -6,9 +6,28 @@ from schemas import UserCreate, UserResponse, LoginResponse, JournalEntryRespons
 from crud import create_user, get_user_by_email, verify_password, verify_user_email, create_journal_entry
 from utils import create_access_token, validate_password, send_verification_email, generate_verification_token, verify_token, decode_access_token
 from models import User, JournalEntry
+from fastapi.middleware.cors import CORSMiddleware
+
 
 
 app = FastAPI()
+
+# Define allowed origins
+origins = [
+    "http://localhost:3000/login/",  
+    "http://localhost:3000",  
+    "http://localhost:3000/register/"
+    # "https://your-frontend-domain.com",  # Your production frontend domain
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # List of allowed origins
+    allow_credentials=True,  # Allow cookies and other credentials
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
+
 
 # Dependency to get database session
 def get_db():
