@@ -84,8 +84,8 @@ async def send_verification_email(email: str, token: str):
         """,
         subtype="html"
     )
-    fm = FastMail(conf)
     try: 
+        fm = FastMail(conf)
         await fm.send_message(message)
         print("Email sent successfully!")
     except Exception as e:

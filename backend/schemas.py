@@ -43,3 +43,4 @@ class JournalEntryCreate(BaseModel):
     emotion: str
     notes: str
     date_time: Optional[datetime.datetime]= datetime.datetime.now()
+

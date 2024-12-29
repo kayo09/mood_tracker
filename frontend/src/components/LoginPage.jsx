@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const LoginForm = () => {
+const LoginForm = ({onLoginSuccess}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -26,13 +26,15 @@ const LoginForm = () => {
       });
 
       // If login is successful, handle the response
-      const { access_token, token_type, user } = response.data;
+      const { access_token, user } = response.data;
       localStorage.setItem('access_token', access_token); // Save token to localStorage
 
       // Display user info or redirect to another page
       alert(`Welcome, ${user.name || user.email}!`);
       console.log('Access Token:', access_token);
       console.log('User:', user);
+
+      onLoginSuccess(user);
 
       // Reset loading state after successful login
       setLoading(false);

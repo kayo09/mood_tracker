@@ -7,7 +7,7 @@ from crud import create_user, get_user_by_email, verify_password, verify_user_em
 from utils import create_access_token, validate_password, send_verification_email, generate_verification_token, verify_token, decode_access_token
 from models import User, JournalEntry
 from fastapi.middleware.cors import CORSMiddleware
-
+from graph import EmotionSelector
 
 
 app = FastAPI()
@@ -101,7 +101,7 @@ async def get_current_user(
 def add_journal_entry(entry: JournalEntryCreate, db: Session= Depends(get_db),current_user: dict=Depends(get_current_user)):
     if not current_user:
         raise HTTPException(status_code=401,detail="User not authenticated")
-    new_entry=create_journal_entry(db, current_user.id, entry.emotion, entry.notes)
+    new_entry=create_journal_entry(db, current_user.id, entry.date_time, entry.emotion, entry.notes)
     try:
         db.commit()
         return new_entry
@@ -115,3 +115,24 @@ def get_journal_entries(db: Session=Depends(get_db),current_user: dict=Depends(g
         raise HTTPException(status_code=401,detail="User not authenticated")
     entries=db.query(JournalEntry).filter(JournalEntry.user_id==current_user.id).all()
     return entries
+
+@app.get("/primary_emotions/",response_model=list[str])
+def get_emotions():
+    emotion=EmotionSelector()
+    return emotion.emotion_hierarchy.keys()
+
+#get secondary emotions based on primary emotion
+@app.get("/secondary_emotions/{emotion}",response_model=list[str])
+def get_secondary_emotions(emotion: str):
+    selector=EmotionSelector()
+    if emotion not in selector.emotion_hierarchy.keys():
+        raise HTTPException(status_code=404,detail="Primary emotion not found")
+    return list(selector.emotion_hierarchy[emotion].keys())
+
+@app.get("/tertiary_emotions/{emotion}",response_model=list[str])
+def get_tertiary_emotions(emotion: str):
+    selector=EmotionSelector()
+    for primary_emotion in selector.emotion_hierarchy.keys():
+        if emotion in selector.emotion_hierarchy[primary_emotion].keys():
+            return selector.emotion_hierarchy[primary_emotion][emotion]
+    raise HTTPException(status_code=404,detail="Secondary emotion not found")
