@@ -11,4 +11,4 @@ Please don't forget to set up a .env file to store the various credentials requi
 
 ![image](assets/Mood%20Calendar/mood%20calendar%20login.png)
 ![image](assets/Mood%20Calendar/mood%20calendar.png)
-![](assets/Mood%20Calendar/mood%20calendar.mov)
+![image](assets/Mood%20Calendar/mood%20calendar%20stat.png)
