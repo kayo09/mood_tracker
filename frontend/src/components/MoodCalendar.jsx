@@ -148,7 +148,7 @@ const MoodCalendar = ({ entries, setEntries }) => {
       transition: 'all 0.3s ease',
     },
     headerButtonHover: {
-      backgroundColor: '#b38867',
+      backgroundColor: '#ffff',
     },
     grid: {
       display: 'grid',
