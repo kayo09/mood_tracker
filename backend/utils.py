@@ -36,6 +36,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
         expire = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+    set_token(encoded_jwt)
     return encoded_jwt
 
 # Generate email verification token
@@ -111,3 +112,10 @@ def decode_access_token(token: str):
         return email
     except JWTError:
         raise credentials_exception
+
+def get_token():
+    return token
+
+def set_token(t):
+    global token
+    token=t
