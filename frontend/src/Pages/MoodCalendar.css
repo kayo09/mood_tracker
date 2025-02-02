@@ -1,0 +1,37 @@
+.days {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  /* 3 columns */
+    gap: 8px;  /* Adds space between boxes */
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    grid-auto-rows: 1fr; /* Ensures rows maintain equal height */
+}
+
+.days > div {
+    background-color: #e3f2fd; /* Soft blue */
+    border-radius: 10px;
+    padding: 0;  /* Remove padding to ensure square shape */
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;  /* Ensures the div remains square */
+}
+
+.days > div:hover {
+    background-color: #bbdefb; /* Slightly darker on hover */
+    transform: scale(1.05); /* Small pop effect */
+}
+
+
+.mood-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensures centering */
+}
