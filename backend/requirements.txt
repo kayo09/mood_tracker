@@ -10,3 +10,4 @@ passlib
 email_validator
 jose
 fastapi-mail
+python-jose
