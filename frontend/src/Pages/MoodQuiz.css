@@ -1,0 +1,29 @@
+.quiz {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    overflow: auto;
+    
+}
+
+.quiz button {
+    padding: 1px 20px;
+    font-size: 16px;
+    color: #DCD7C9;
+    background-color: #3F4F44;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quiz button:hover {
+    background-color: #A27B5C;
+}
+
+.quiz button:active {
+    background-color: #A27B5C;
+}

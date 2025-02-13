@@ -1,25 +1,29 @@
-// App.js
-import React, { useState } from 'react';
-import LoginPage from './components/LoginPage';
-import RegisterPage from './components/RegisterPage';
-// import MoodCalendar from './components/MoodCalendar';
-import MoodDashboard from './components/MoodDashboard';
+import logo from './logo.svg';
+import './App.css';
+import MoodCalendar from './Pages/MoodCalendar.jsx'
+import MoodDistribution from './Pages/MoodDistribution.jsx';
+import MoodJournal from './Pages/MoodJournal.jsx';
 
-const App = () => {
-  const [currentPage, setCurrentPage] = useState('login'); // Tracks the current page: 'register', 'login', 'moodCalendar'
 
-  // Handlers for navigation
-  const handleRegisterSuccess = () => setCurrentPage('login');
-  const handleLoginSuccess = () => setCurrentPage('moodDashboard');
 
+function App() {
   return (
-    <div>
-      <center><h1 style={{color:'#00adb5'}}>Mood Calendar🐮</h1></center>
-      {currentPage === 'register' && <RegisterPage onRegisterSuccess={handleRegisterSuccess} />}
-      {currentPage === 'login' && <LoginPage onLoginSuccess={handleLoginSuccess} />}
-      {currentPage === 'moodDashboard' && <MoodDashboard />}
-    </div>
+     <div className='canvas'>
+      <div className='mood-distribution box'>
+      <MoodDistribution></MoodDistribution>
+      <div className='resizer'></div>
+      </div>
+      <div className='mood-calendar box'>
+      <MoodCalendar> </MoodCalendar>
+      <div className='resizer'></div>
+      </div>
+      <div className='mood-journal box'>
+      <MoodJournal></MoodJournal>
+      <div className='resizer'></div>
+      </div>
+     </div>
   );
-};
+
+}
 
 export default App;
