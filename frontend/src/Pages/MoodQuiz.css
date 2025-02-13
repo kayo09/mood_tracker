@@ -1,25 +1,19 @@
-/* MoodQuiz.css */
-
-.mood-container {
-    transform: translateX(-50%, 0);
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-}
-
 .quiz {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    overflow: auto;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
+    overflow: auto;
+    
 }
 
 .quiz button {
-    padding: 10px 20px;
+    padding: 1px 20px;
     font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
+    color: #DCD7C9;
+    background-color: #3F4F44;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -27,9 +21,9 @@
 }
 
 .quiz button:hover {
-    background-color: #0056b3;
+    background-color: #A27B5C;
 }
 
 .quiz button:active {
-    background-color: #004080;
+    background-color: #A27B5C;
 }
