@@ -9,18 +9,18 @@ import MoodJournal from './Pages/MoodJournal.jsx';
 function App() {
   return (
      <div className='canvas'>
-      <div className='mood-distribution box'>
+      {/* <div className='mood-distribution box'>
       <MoodDistribution></MoodDistribution>
       <div className='resizer'></div>
-      </div>
-      <div className='mood-calendar box'>
+      </div> */}
+      <div className='mood-calendar-box'>
       <MoodCalendar> </MoodCalendar>
       <div className='resizer'></div>
       </div>
-      <div className='mood-journal box'>
+      {/* <div className='mood-journal box'>
       <MoodJournal></MoodJournal>
       <div className='resizer'></div>
-      </div>
+      </div> */}
      </div>
   );
 
