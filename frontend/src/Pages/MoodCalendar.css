@@ -1,57 +1,72 @@
-.days {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);  /* 3 columns */
-    gap: 8px;  /* Adds space between boxes */
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    grid-auto-rows: 1fr; /* Ensures rows maintain equal height */
-    color: orange;
-    background-color: white; /* Needed to see the border-radius effect */
+@import url("https://fonts.googleapis.com/css2?family=Water+Brush&display=swap");
+
+.day-front {
+  font-family: "Water Brush", cursive;
+  font-size: 60px;
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.days {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 20px;
+  grid-auto-rows: 1fr;
+  color: black;
+  background-color: white;
+  overflow: hidden;
+}
 
 .days > div {
-    padding: 0;  /* Remove padding to ensure square shape */
-    font-size: 20px;
-    font-weight: 600;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1;  /* Ensures the div remains square */
-    perspective: 1000px; /* For 3D effect */
+  padding: 0;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  perspective: 1000px;
+  transform-style: preserve-3d;
 }
 
 .day-inner {
-    border-radius: 20px;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    box-shadow: 0 4px 8px rgb(232, 207, 207);
-    background-color: #2C3930;
+  transition: transform 0.6s;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  border-radius: 20%;
 }
 
-.days > div:hover .day-inner {
-    transform: rotateY(180deg);
+.days > div.flipped .day-inner {
+  transform: rotateY(180deg);
 }
 
-.day-front, .day-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.day-front,
+.day-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* For Safari */
 }
 
 .day-back {
-    /* background-color: white; */
-    transform: rotateY(180deg);
+  backdrop-filter: blur(2px);
+  transform: rotateY(180deg);
+  background: inherit !important; /* Force inheritance */
+  border-radius: 20%;
+  overflow: hidden;
+  backface-visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.day-back > div {
+  background: rgba(255, 255, 255, 0.199);
+  padding: 8px;
 }

@@ -2,4 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
+}
+.mood-calendar-box{
+  width: 750px;
+  height: 750px;
+  /* color: white; */
+  
 }
