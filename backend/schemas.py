@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 import datetime
 from typing import Optional 
-
+from typing import List
 
 class UserCreate(BaseModel):
     username: str
