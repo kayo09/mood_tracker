@@ -1,6 +1,9 @@
 import "./MoodCalendar.css";
 import { useState, useEffect, useCallback } from "react";
 import MoodQuiz from "./MoodQuiz";
+import { useDispatch } from "react-redux";
+import EmotionOverview from "./EmotionOverview";
+import Journal from "./Journal";
 
 const now = new Date();
 const year = now.getFullYear();
@@ -41,6 +44,7 @@ const mixColors = (color1, color2, t) => {
 };
 
 export default function MoodCalendar() {
+  const dispatch = useDispatch();
   const [selectedDay, setSelectedDay] = useState(null);
   const [flippedIndex, setFlippedIndex] = useState(null);
   const [time, setTime] = useState(0);
@@ -84,12 +88,17 @@ export default function MoodCalendar() {
     },
     [time]
   );
-
   const handleDayClick = (index, date) => {
     setSelectedDay(date);
     setFlippedIndex(index);
+    
+    // Dispatch the date here instead of in render
+    dispatch({ 
+      type: 'SET_SELECTED_DATE', 
+      payload: date.toISOString().split('T')[0] 
+    });
   };
-
+  
   const handleQuizClose = (mood) => {
     if (selectedDay) {
       setMoods(prev => ({
@@ -139,6 +148,11 @@ export default function MoodCalendar() {
             </div>
           );
         })}
+      </div>
+      <div className="emotion-overview">
+      <EmotionOverview moods={moods} /></div>
+      <div className="journal"> 
+      <Journal />
       </div>
     </div>
   );

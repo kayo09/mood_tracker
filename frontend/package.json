@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^2.5.1",
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
+    "date-fns": "^4.1.0",
+    "package.json": "^2.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
     "react-scripts": "5.0.1",
     "recharts": "^2.15.1",
     "three": "^0.173.0"

@@ -1,29 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
-import MoodCalendar from './Pages/MoodCalendar.jsx'
-import MoodDistribution from './Pages/MoodDistribution.jsx';
-import MoodJournal from './Pages/MoodJournal.jsx';
-
-
+import "./App.css";
+import MoodCalendar from "./Pages/MoodCalendar.jsx";
+import LoginPage from "./Pages/LoginPage.jsx";
+import { useSelector } from "react-redux";
 
 function App() {
-  return (
-     <div className='canvas'>
-      {/* <div className='mood-distribution box'>
-      <MoodDistribution></MoodDistribution>
-      <div className='resizer'></div>
-      </div> */}
-      <div className='mood-calendar-box'>
-      <MoodCalendar> </MoodCalendar>
-      <div className='resizer'></div>
-      </div>
-      {/* <div className='mood-journal box'>
-      <MoodJournal></MoodJournal>
-      <div className='resizer'></div>
-      </div> */}
-     </div>
-  );
+  const user = useSelector((state) => state.user.user);
 
+  return (
+    <div className="canvas">
+      {/* {!user ? (
+          // Render the login page if there is no user in Redux state
+          <LoginPage />
+        ) : ( 
+       <div className="mood-calendar-box">
+            <MoodCalendar/>
+            <div className="resizer"></div>
+          </div> 
+      )} */}
+      {!user?(<LoginPage/>):(
+        <div className="mood-distribution-box">
+          <div className="mood-calendar-box">
+          <MoodCalendar/>
+          </div>
+        </div>
+  )
 }
+    </div>
+  );
+  }
+  ;
 
 export default App;

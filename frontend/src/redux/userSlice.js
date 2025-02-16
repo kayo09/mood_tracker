@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   user: null,
   access_token: null,
+  selectedDate: new Date().toISOString().split('T')[0] // Initialize with today
 };
 
 const userSlice = createSlice({
@@ -19,8 +20,11 @@ const userSlice = createSlice({
       localStorage.removeItem('user');
       localStorage.removeItem('access_token');
     },
+    setSelectedDate: (state, action) => {
+      state.selectedDate = action.payload;
+    },
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser, setSelectedDate } = userSlice.actions;
 export default userSlice.reducer;

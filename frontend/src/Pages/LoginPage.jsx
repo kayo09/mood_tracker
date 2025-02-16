@@ -29,10 +29,7 @@ const LoginPage= ({ onLoginSuccess }) => {
       );
 
       const { access_token, user } = response.data;
-
-      // Update Redux state
-      dispatch(setUser(user,access_token));
-
+      dispatch(setUser({ user: user, access_token }));
       alert(`Welcome, ${user.name || user.email}!`);
       onLoginSuccess?.(user);
     } catch (err) {
