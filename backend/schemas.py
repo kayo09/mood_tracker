@@ -33,7 +33,6 @@ class JournalEntryResponse(BaseModel):
     id: int 
     emotion: str
     notes: str
-    date_time: datetime.datetime
     created_at: datetime.datetime
 
     class Config: 

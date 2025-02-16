@@ -5,11 +5,27 @@ from jose import jwt, JWTError
 from itsdangerous import URLSafeTimedSerializer
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from fastapi import Depends
+from typing import List
+from graph import EmotionSelector
 from config import settings
 import smtplib
 
 # Token serializer
 serializer = URLSafeTimedSerializer(settings.SECRET_KEY)
+def count_primary_emotions(emotion_strings: List[str]) -> dict:
+    """
+    Count the occurrences of each primary emotion from a list of emotion strings.
+    Each emotion string is expected to be in the format 'Primary/Secondary/Tertiary'.
+    Returns a dictionary with primary emotions as keys and their counts as values.
+    """
+    selector = EmotionSelector()
+    primary_emotions = selector.emotion_hierarchy.keys()
+    counts = {emotion: 0 for emotion in primary_emotions}
+    for emotion_str in emotion_strings:
+        primary_part = emotion_str.split('/', 1)[0].strip()
+        if primary_part in counts:
+            counts[primary_part] += 1
+    return counts
 
 # Password validation
 def validate_password(password: str) -> bool:
