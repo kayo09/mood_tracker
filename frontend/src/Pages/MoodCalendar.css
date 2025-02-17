@@ -1,25 +1,34 @@
 @import url("https://fonts.googleapis.com/css2?family=Water+Brush&display=swap");
 
-.day-front {
-  font-family: "Water Brush", cursive;
-  font-size: 60px;
-  font-weight: bolder;
+/* Global container */
+.mood-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(1, 1, 1);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: hidden;
+
 }
 
+/* Calendar section */
 .days {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  padding: 20px;
+  gap: 10px;
+  padding: 50px;
   grid-auto-rows: 1fr;
   color: black;
-  background-color: white;
-  overflow: hidden;
+  background-color: rgb(1, 1, 1);
+  width: 50%;
+  height: 100vh;
+  overflow-y: auto;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Day card styling */
 .days > div {
   padding: 0;
   text-align: center;
@@ -30,6 +39,7 @@
   aspect-ratio: 1;
   perspective: 1000px;
   transform-style: preserve-3d;
+  margin-bottom: 16px;
 }
 
 .day-inner {
@@ -38,6 +48,17 @@
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
+  border-radius: 20%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.day-front {
+  font-family: "Water Brush", cursive;
+  font-size: 60px;
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 20%;
 }
 
@@ -52,21 +73,102 @@
   height: 100%;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden; /* For Safari */
+  border-radius: 20%;
 }
 
 .day-back {
-  backdrop-filter: blur(2px);
   transform: rotateY(180deg);
   background: inherit !important; /* Force inheritance */
-  border-radius: 20%;
   overflow: hidden;
-  backface-visibility: hidden;
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  backdrop-filter: blur(5px);
 }
 
 .day-back > div {
-  background: rgba(255, 255, 255, 0.199);
-  padding: 8px;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 16px;
+  height: 100%;
+  border-radius: 20%;
+}
+
+/* Right section with emotion overview and journal */
+.right-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 14px;
+  background-color: #DED6D1;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: black;
+  border-radius: 12px;
+}
+
+.emotion-overview, 
+.journal {
+  flex: 1;
+  background-color: rgb(0, 0, 0);
+  /* padding: 14px; */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+}
+
+/* Quiz container styling */
+.day-back .quizContainer {
+  backdrop-filter: blur(70px);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  padding: 22px;
+  overflow-y: auto;
+  transform: translateZ(150px);
+  perspective: 1000px;
+  border-radius: 20%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .days {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .mood-container {
+    flex-direction: column;
+  }
+  
+  .days, .right-container {
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+  }
+  
+  .days {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .day-front {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .days {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 16px;
+  }
+  
+  .right-container {
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  .emotion-overview, .journal {
+    padding: 16px;
+  }
 }

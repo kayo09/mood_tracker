@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./MoodQuiz.css";
+import { useSelector } from 'react-redux';
+
 
 const BASE_URL = "http://localhost:8000/";
 const ENDPOINTS = [
@@ -129,6 +131,8 @@ export default function MoodQuiz({ onClose, selectedDate }) {
   const [secondaryEmotions, setSecondaryEmotions] = useState([]);
   const [tertiaryEmotions, setTertiaryEmotions] = useState([]);
   const [mood, setMood] = useState([]);
+  const access_token = useSelector((state) => state.user.access_token);
+
 
   const buttonBaseStyle = {
     borderRadius: "15px",
@@ -162,12 +166,31 @@ export default function MoodQuiz({ onClose, selectedDate }) {
     setMood((prevMood) => {
       const newMood = [...prevMood, emotion];
       setTimeout(() => {
-        onClose(newMood);
+        (async () => {
+          try {
+            const response = await fetch(BASE_URL + "add_entry", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${access_token}`,
+              },
+              body: JSON.stringify({
+                emotion: newMood.join("/"),
+                notes: selectedDate.toISOString(), 
+                date_time: selectedDate.toISOString(),
+              }),
+            });
+            if (!response.ok) throw new Error("Failed to save entry");
+            onClose(newMood);
+          } catch (error) {
+            console.error("Error saving entry:", error);
+          }
+        })();
       }, 100);
-      console.log("Mood:", newMood);
       return newMood;
     });
   };
+  
   const handleSecondaryEmotionClick = async (emotion) => {
     try {
       setMood((prevMood) => [...prevMood, emotion]); 

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 import datetime
 from typing import Optional 
-
+from typing import List
 
 class UserCreate(BaseModel):
     username: str
@@ -33,7 +33,6 @@ class JournalEntryResponse(BaseModel):
     id: int 
     emotion: str
     notes: str
-    date_time: datetime.datetime
     created_at: datetime.datetime
 
     class Config: 

@@ -1,10 +1,12 @@
 from fastapi import FastAPI, Depends, HTTPException, status
+import datetime
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 from database import SessionLocal
 from schemas import UserCreate, UserResponse, LoginResponse, JournalEntryResponse, JournalEntryCreate
 from crud import create_user, get_user_by_email, verify_password, verify_user_email, create_journal_entry
-from utils import create_access_token, validate_password, send_verification_email, generate_verification_token, verify_token, decode_access_token
+from utils import create_access_token, validate_password, send_verification_email, generate_verification_token, verify_token, decode_access_token, count_primary_emotions
 from models import User, JournalEntry
 from fastapi.middleware.cors import CORSMiddleware
 from graph import EmotionSelector
@@ -74,7 +76,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     access_token = create_access_token(data={"sub": user.email})
     return {"access_token": access_token, "token_type": "bearer", "user": user}
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 async def get_current_user(
     token: str = Depends(oauth2_scheme), 
@@ -115,6 +117,57 @@ def get_journal_entries(db: Session=Depends(get_db),current_user: dict=Depends(g
         raise HTTPException(status_code=401,detail="User not authenticated")
     entries=db.query(JournalEntry).filter(JournalEntry.user_id==current_user.id).all()
     return entries
+
+@app.get("/emotion_counts/")
+def get_emotion_counts(
+    date: datetime.date = None,  # Add date parameter
+    db: Session = Depends(get_db), 
+    current_user: User = Depends(get_current_user)
+):
+    if not current_user:
+        raise HTTPException(status_code=401, detail="User not authenticated")
+    
+    query = db.query(JournalEntry).filter(JournalEntry.user_id == current_user.id)
+    
+    if date:
+        # Filter entries by date (SQLite DATE() function)
+        query = query.filter(
+            func.DATE(JournalEntry.created_at) == date.isoformat()
+        )
+    
+    entries = query.all()
+    emotion_strings = [entry.emotion for entry in entries]
+    counts = count_primary_emotions(emotion_strings)
+    return counts
+@app.get("/emotion_timeseries/")
+def get_emotion_timeseries(
+    db: Session = Depends(get_db), 
+    current_user: User = Depends(get_current_user)
+):
+    if not current_user:
+        raise HTTPException(status_code=401, detail="User not authenticated")
+    
+    entries = db.query(JournalEntry).filter(JournalEntry.user_id == current_user.id).all()
+    
+    # Group entries by date and emotion
+    time_series = {}
+    for entry in entries:
+        date_str = entry.created_at.date().isoformat()  # Group by date without time
+        primary_emotion = entry.emotion.split('/', 1)[0].strip()
+        
+        if date_str not in time_series:
+            time_series[date_str] = {}
+        
+        time_series[date_str][primary_emotion] = time_series[date_str].get(primary_emotion, 0) + 1
+    
+    # Convert to list format for charting
+    formatted_data = []
+    for date, emotions in time_series.items():
+        entry = {"date": date}
+        entry.update(emotions)
+        formatted_data.append(entry)
+    
+    return formatted_data
 
 @app.get("/primary_emotions/",response_model=list[str])
 def get_emotions():
