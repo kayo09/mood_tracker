@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/userSlice";
+import "./LoginPage.css";
 
 const LoginPage= ({ onLoginSuccess }) => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const LoginPage= ({ onLoginSuccess }) => {
 
   return (
     <div style={{ maxWidth: "400px", margin: "auto", padding: "20px" }}>
-      <h2>Login</h2>
+      <h2>Login🐮</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>

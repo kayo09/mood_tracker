@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Water+Brush&display=swap");
+
+/* Base styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #000000;
+  color: #333;
+}
+
+/* Container styles */
+.login-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 30px;
+  background-color: rgb(11, 10, 10);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styles using Water Brush font */
+h2 {
+  font-family: 'Water Brush', cursive;
+  font-size: 60px;
+  color: #EEC6CA;
+  text-align: center;
+  margin-bottom: 30px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Form styles */
+form div {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #1e88e5;
+  box-shadow: 0 0 5px rgba(30, 136, 229, 0.3);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #BCF4DE;
+  color: BCF4DE;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+button:hover:not(:disabled) {
+  background-color: #BCF4DE;
+}
+
+button:disabled {
+  background-color: #90caf9;
+  cursor: not-allowed;
+}
+
+/* Error message */
+p {
+  color: #e53935;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
