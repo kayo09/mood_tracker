@@ -4,9 +4,14 @@
   box-sizing: border-box;
   
 }
-.mood-calendar-box{
-  width: 750px;
-  height: 750px;
-  /* color: rgb(157, 154, 154); */
-  
+.mood-calendar-box {
+  position: fixed; /* Keeps it fixed to the left side */
+  left: 0;
+  top: 0;
+  width: 100vw; /* Takes up half the screen width */
+  height: 100vh; /* Full height of the viewport */
+  background-color: rgb(157, 154, 154); /* Optional background color */
+  overflow: hidden; /* Ensures content is scrollable if needed */
+  display: flex; /* Enables horizontal split-screen layout */
+
 }

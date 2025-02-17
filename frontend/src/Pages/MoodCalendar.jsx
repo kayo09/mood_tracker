@@ -149,11 +149,14 @@ export default function MoodCalendar() {
           );
         })}
       </div>
+      <div className="right-container">
       <div className="emotion-overview">
       <EmotionOverview moods={moods} /></div>
       <div className="journal"> 
       <Journal />
       </div>
+      </div> 
     </div>
+    
   );
 }

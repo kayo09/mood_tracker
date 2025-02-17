@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import "./EmotionOverview.css";
+import { useSelector } from "react-redux";
 
 const emotionColorScheme = {
   Joy: "#FFD700",
@@ -9,22 +10,34 @@ const emotionColorScheme = {
   Love: "#e91e63",
 };
 
-const EmotionOverview = ({ moods }) => {
+const EmotionOverview = () => {
   const [sortedEntries, setSortedEntries] = useState([]);
+  const token= useSelector((state) => state.user.access_token);
 
   useEffect(() => {
-    const processEntries = () => {
-      const entries = Object.entries(moods).map(([dateString, emotions]) => ({
-        date: new Date(dateString),
-        emotions,
-      }));
-      
-      entries.sort((a, b) => b.date - a.date);
-      setSortedEntries(entries);
+    const fetchEntries = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/entries",{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        
+        const processedEntries = data.map(entry => ({
+          date: new Date(entry.created_at),
+          emotions: entry.emotion.split('/'),
+        }));
+
+        processedEntries.sort((a, b) => b.date - a.date);
+        setSortedEntries(processedEntries.slice(0, 5));
+      } catch (error) {
+        console.error("Error fetching entries:", error);
+      }
     };
 
-    processEntries();
-  }, [moods]);
+    fetchEntries();
+  }, []);
 
   const getPrimaryColor = (emotions) => {
     const primary = emotions?.[0];

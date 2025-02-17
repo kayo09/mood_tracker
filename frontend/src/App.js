@@ -18,11 +18,10 @@ function App() {
           </div> 
       )} */}
       {!user?(<LoginPage/>):(
-        <div className="mood-distribution-box">
           <div className="mood-calendar-box">
           <MoodCalendar/>
-          </div>
         </div>
+        
   )
 }
     </div>
