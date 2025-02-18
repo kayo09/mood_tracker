@@ -15,20 +15,21 @@ from graph import EmotionSelector
 app = FastAPI()
 
 # Define allowed origins
+# Define allowed origins
 origins = [
-    "http://localhost:3000/login/",  
-    "http://localhost:3000",  
-    "http://localhost:3000/register/"
-    # "https://your-frontend-domain.com",  # Your production frontend domain
+    "http://localhost:3000",  # Local development frontend
+    "https://moodtracker-production-f63d.vercel.app",  # Your deployed frontend
+    "https://moodtracker-production-f63d.up.railway.app",  # Your Railway backend (for testing API calls)
+    "*"  # Temporary wildcard for debugging (remove this in production)
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # List of allowed origins
-    allow_credentials=True,  # Allow cookies and other credentials
-    allow_methods=["*"],  # Allow all HTTP methods
-    allow_headers=["*"],  # Allow all headers
-)
+    allow_origins=origins,  # Allow frontend & backend URLs
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)  # Allow all headers
 
 
 # Dependency to get database session
