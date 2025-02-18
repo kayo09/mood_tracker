@@ -1,12 +1,12 @@
 # Use an official Python runtime as a parent image
-FROM python:3.10-slim
+FROM python:3.13
 
 # Set the working directory
 WORKDIR /app
 
 # Copy requirements and install dependencies
 COPY requirements.txt .
-RUN pip3 install --upgrade pip && pip install -r requirements.txt
+RUN pip3 install --upgrade pip && pip3 install --user -r requirements.txt
 
 # Copy the rest of the application code
 COPY . .
