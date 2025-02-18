@@ -5,9 +5,9 @@ import { useSelector } from 'react-redux';
 
 const BASE_URL = "http://0.0.0.0:8000/";
 const ENDPOINTS = [
-  "primary_emotions",
-  "secondary_emotions",
-  "tertiary_emotions",
+  "primary_emotions/",
+  "secondary_emotions/",
+  "tertiary_emotions/",
 ];
 const getContrastColor = (hexColor) => {
   const r = parseInt(hexColor.substr(1, 2), 16);
