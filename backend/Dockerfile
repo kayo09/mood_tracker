@@ -7,7 +7,8 @@ WORKDIR /app
 # Copy requirements and install dependencies
 COPY requirements.txt .
 RUN pip3 install --upgrade pip && pip3 install --user -r requirements.txt
-RUN pip3 install fastapi uvicorn
+
+ENV PATH="/root/.local/bin:$PATH"
 
 
 # Copy the rest of the application code
