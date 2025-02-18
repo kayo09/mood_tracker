@@ -9,8 +9,8 @@ Clone the repository using<br> ```git clone```<br>```https://github.com/kayo09/m
 ## Note: 
 Please don't forget to set up a .env file to store the various credentials required for encryption and login. 
 
-![image](assets/Mood%20Calendar/mood%20calendar%20login.png)
-![](https://github.com/kayo09/mood_tracker/blob/development/assets/Mood%20Calendar/mood-calendar.gif)
+![](https://github.com/kayo09/mood_tracker/blob/development/assets/Mood%20Calendar/mood-calendar%20(dark,%20alpha).png)
+
 
 
 
