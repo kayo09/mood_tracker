@@ -17,7 +17,7 @@ const EmotionOverview = () => {
   useEffect(() => {
     const fetchEntries = async () => {
       try {
-        const response = await fetch("http://localhost:8000/entries",{
+        const response = await fetch("http://0.0.0.0:8000/entries",{
           headers: {
             Authorization: `Bearer ${token}`,
           },

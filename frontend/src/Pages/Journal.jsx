@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./Journal.css";
 
-const BASE_URL = "http://localhost:8000/";
+const BASE_URL = "http://0.0.0.0:8000/";
 
 export default function Journal() {
   const [entries, setEntries] = useState([]);
