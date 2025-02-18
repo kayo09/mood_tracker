@@ -21,7 +21,7 @@ origins = [
     "https://localhost:3000",  # Local development frontend
     "https://mood-tracker-liart.vercel.app/",  # Your deployed frontend
     "https://moodtracker-production-f63d.up.railway.app/register/",  # Your Railway backend (for testing API calls)
-    "https://moodtracker-production-f63d.up.railway.app/",
+    "https://moodtracker-production-f63d.up.railway.app/*",
     "*"  # Temporary wildcard for debugging (remove this in production)
 
 ]
