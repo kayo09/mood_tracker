@@ -22,7 +22,7 @@ const LoginPage= ({ onLoginSuccess }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/login/",
+        "http://0.0.0.0:8000/login",
         formData,
         {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
