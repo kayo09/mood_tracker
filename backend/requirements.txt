@@ -1,3 +1,5 @@
+pymysql
+psycopg2
 python-multipart
 fastapi
 uvicorn
