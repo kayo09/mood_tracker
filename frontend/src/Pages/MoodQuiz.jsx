@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const BASE_URL = "https://moodtracker-production-f63d.up.railway.app/";
 const ENDPOINTS = [
-  "primary_emotions",
+  "primary_emotions/",
   "secondary_emotions",
   "tertiary_emotions",
 ];
