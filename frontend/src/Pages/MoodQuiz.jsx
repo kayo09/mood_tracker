@@ -168,7 +168,7 @@ export default function MoodQuiz({ onClose, selectedDate }) {
       setTimeout(() => {
         (async () => {
           try {
-            const response = await fetch(BASE_URL + "add_entry", {
+            const response = await fetch(BASE_URL + "add_entry/", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
