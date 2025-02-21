@@ -22,9 +22,10 @@ const LoginPage= ({ onLoginSuccess }) => {
 
     try {
       const response = await axios.post(
-        "https://moodtracker-production-f63d.up.railway.app/login/",
+        "http://127.0.0.1:8000/login/",
         formData,
         {
+          method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         }
       );

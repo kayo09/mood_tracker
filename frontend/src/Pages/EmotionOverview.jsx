@@ -1,87 +1,29 @@
-import { use, useEffect, useState } from "react";
-import "./EmotionOverview.css";
-import { useSelector } from "react-redux";
+import react from 'react';
+import { useDispatch } from "react-redux";
 
-const emotionColorScheme = {
-  Joy: "#FFD700",
-  Sadness: "#3498db",
-  Anger: "#e74c3c",
-  Fear: "#8e44ad",
-  Love: "#e91e63",
+const BASE_URL = "http://127.0.0.1:8000/";
+
+const getEntries = async () => {
+  const response = await fetch(BASE_URL + 'emotion_counts/', {
+    headers: { Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwYXJtYXIua2F5QGljbG91ZC5jb20iLCJleHAiOjE3NDAxMDAwNjh9.kgb2h_f_H3ijbhnZIkCqkyqXLUCcktU8NRTA1mFbvh8"}` }
+  });
+  
+  if (!response.ok) throw new Error('Failed to fetch entries');
+  
+  const data = await response.json();
+  console.log(data);
+ 
+  
 };
 
 const EmotionOverview = () => {
-  const [sortedEntries, setSortedEntries] = useState([]);
-  const token= useSelector((state) => state.user.access_token);
-
-  useEffect(() => {
-    const fetchEntries = async () => {
-      try {
-        const response = await fetch("https://moodtracker-production-f63d.up.railway.app/entries",{
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
-        
-        const processedEntries = data.map(entry => ({
-          date: new Date(entry.created_at),
-          emotions: entry.emotion.split('/'),
-        }));
-
-        processedEntries.sort((a, b) => b.date - a.date);
-        setSortedEntries(processedEntries.slice(0, 5));
-      } catch (error) {
-        console.error("Error fetching entries:", error);
-      }
-    };
-
-    fetchEntries();
-  }, []);
-
-  const getPrimaryColor = (emotions) => {
-    const primary = emotions?.[0];
-    return emotionColorScheme[primary] || "#ecf0f1";
-  };
-
+  const dispatch = useDispatch();
+  
   return (
-    <div className="emotion-overview">
-      <h2>Emotional History</h2>
-      
-      <div className="legend">
-        {Object.entries(emotionColorScheme).map(([emotion, color]) => (
-          <div key={emotion} className="legend-item">
-            <div className="color-box" style={{ backgroundColor: color }} />
-            <span>{emotion}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className="entries-grid">
-        {sortedEntries.map((entry, index) => {
-          const dateString = entry.date.toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-          });
-
-          return (
-            <div
-              key={index}
-              className="entry-card"
-              style={{ backgroundColor: getPrimaryColor(entry.emotions) }}
-            >
-              <div className="entry-content">
-                <div className="entry-date">{dateString}</div>
-                <div className="entry-emotions">
-                  {entry.emotions.join(" → ")}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+    <div>
+      <h1>Emotion Overview</h1>
+      {getEntries()}
     </div>
   );
-};
-
+}
 export default EmotionOverview;

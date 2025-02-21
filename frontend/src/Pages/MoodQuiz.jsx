@@ -3,7 +3,8 @@ import "./MoodQuiz.css";
 import { useSelector } from 'react-redux';
 
 
-const BASE_URL = "https://moodtracker-production-f63d.up.railway.app/";
+// const BASE_URL = "https://moodtracker-production-f63d.up.railway.app/";
+const BASE_URL = "http://127.0.0.1:8000/";
 const ENDPOINTS = [
   "primary_emotions/",
   "secondary_emotions",
