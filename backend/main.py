@@ -17,8 +17,9 @@ app = FastAPI()
 # Define allowed origins
 # Define allowed origins
 origins = [
+    "https://127.0.0.1:8000/*"
     "https://localhost:8000/",  # Local development frontend
-    "https://localhost:3000",  # Local development frontend
+    "https://localhost:3000/",  # Local development frontend
     "https://mood-tracker-liart.vercel.app/",  # Your deployed frontend
     "https://moodtracker-production-f63d.up.railway.app/register/",  # Your Railway backend (for testing API calls)
     "https://moodtracker-production-f63d.up.railway.app/*",
