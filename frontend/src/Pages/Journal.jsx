@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./Journal.css";
 
-// const BASE_URL = "https://moodtracker-production-f63d.up.railway.app/";
-const BASE_URL="sqlite://moodtracker.db/";
+const BASE_URL = "https://moodtracker-production-f63d.up.railway.app/";
 
 export default function Journal() {
   const [entries, setEntries] = useState([]);

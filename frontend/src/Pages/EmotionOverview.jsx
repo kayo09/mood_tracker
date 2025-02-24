@@ -17,7 +17,7 @@ const EmotionOverview = () => {
   useEffect(() => {
     const fetchEntries = async () => {
       try {
-        const response = await fetch("https://moodtracker-production-f63d.up.railway.app/entries",{
+        const response = await fetch("https://moodtracker-production-f63d.up.railway.app/entries/",{
           headers: {
             Authorization: `Bearer ${token}`,
           },
