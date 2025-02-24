@@ -90,7 +90,7 @@ async def send_verification_email(email: str, token: str):
     """
     Send a verification email to the user.
     """
-    verification_link = f"http://kayparmar.com/verify/{token}"
+    verification_link = f"https://moodtracker-production-f63d.up.railway.app/verify/{token}"
     message = MessageSchema(
         subject="Verify Your Email",
         recipients=[email],
