@@ -120,6 +120,7 @@ export default function MoodCalendar() {
           const day = new Date();
           day.setDate(now.getDate() + index);
           const isFlipped = flippedIndex === index;
+          const dayMonth = day.getMonth();
 
           return (
             <div
@@ -132,7 +133,7 @@ export default function MoodCalendar() {
                 style={{ backgroundColor: getDayColor(index) }}
               >
                 <div className="day-front">
-                  {`${day.getDate()} ${monthNames[month]}`}
+                  {`${day.getDate()} ${monthNames[dayMonth]}`}
                 </div>
                 <div className="day-back">
                   <div style={quizContainerStyle}>
