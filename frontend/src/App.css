@@ -15,3 +15,33 @@
   display: flex; /* Enables horizontal split-screen layout */
 
 }
+
+.auth-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-toggle {
+  margin-top: 15px;
+  text-align: center;
+  color: #EEC6CA;
+}
+
+.text-button {
+  background: none;
+  border: none;
+  color: #BCF4DE;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+  text-decoration: underline;
+  width: auto;
+}
+
+.text-button:hover {
+  color: #a0e6ca;
+  background: none;
+}
