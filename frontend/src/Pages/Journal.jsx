@@ -95,8 +95,6 @@ export default function Journal() {
 
   return (
     <div className="journal-container">
-      <h2>Journal Entries</h2>
-
       <form onSubmit={handleSubmit} className="journal-form">
         <div className="form-group">
           <label>Date:</label>

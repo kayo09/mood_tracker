@@ -6,26 +6,10 @@ import EmotionOverview from "./EmotionOverview";
 import Journal from "./Journal";
 
 const now = new Date();
-const year = now.getFullYear();
-const month = now.getMonth();
 const monthNames = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
-
-const quizContainerStyle = {
-  backdropFilter: "blur(70px)",
-  width: "100%",
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  gap: "10px",
-  padding: "22px",
-  overflowY: "auto",
-  transform: "translateZ(150px)",
-  perspective: "1000px",
-};
 
 const emotionColors = [
   [1.0, 0.843, 0.0], // Joy (Gold)
@@ -46,9 +30,21 @@ const mixColors = (color1, color2, t) => {
 export default function MoodCalendar() {
   const dispatch = useDispatch();
   const [selectedDay, setSelectedDay] = useState(null);
-  const [flippedIndex, setFlippedIndex] = useState(null);
+  const [activeComponent, setActiveComponent] = useState('overview'); // 'overview', 'calendar', or 'journal'
   const [time, setTime] = useState(0);
   const [moods, setMoods] = useState({});  // Store moods for different days
+  const [mobileView, setMobileView] = useState(false);
+
+  // Check screen size for responsive layout
+  useEffect(() => {
+    const handleResize = () => {
+      setMobileView(window.innerWidth < 768);
+    };
+    
+    handleResize(); // Initial check
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     let animationFrameId;
@@ -88,76 +84,120 @@ export default function MoodCalendar() {
     },
     [time]
   );
+
   const handleDayClick = (index, date) => {
     setSelectedDay(date);
-    setFlippedIndex(index);
+    setActiveComponent('quiz');
     
-    // Dispatch the date here instead of in render
+    // Dispatch the date
     dispatch({ 
       type: 'SET_SELECTED_DATE', 
       payload: date.toISOString().split('T')[0] 
     });
   };
   
-  const handleQuizClose = (mood) => {
+  const handleQuizComplete = (mood) => {
     if (selectedDay) {
       setMoods(prev => ({
         ...prev,
         [selectedDay.toISOString()]: mood
       }));
     }
-    // Add a small delay to allow the flip animation to complete
-    setTimeout(() => {
-      setFlippedIndex(null);
-      setSelectedDay(null);
-    }, 100);
+    setActiveComponent('overview');
+  };
+
+  const handleQuizClose = () => {
+    setActiveComponent('calendar');
+    setSelectedDay(null);
+  };
+
+  const handleNavClick = (component) => {
+    setActiveComponent(component);
   };
 
   return (
-    <div className="mood-container">
-      <div className="days">
-        {[...Array(9)].map((_, index) => {
-          const day = new Date();
-          day.setDate(now.getDate() + index);
-          const isFlipped = flippedIndex === index;
-          const dayMonth = day.getMonth();
+    <div className="dashboard-container">
+      {/* Dashboard Navigation */}
+      <div className="dashboard-nav">
+        <button 
+          className={`nav-item ${activeComponent === 'overview' ? 'active' : ''}`} 
+          onClick={() => handleNavClick('overview')}
+        >
+          Emotion Overview
+        </button>
+        <button 
+          className={`nav-item ${activeComponent === 'calendar' ? 'active' : ''}`} 
+          onClick={() => handleNavClick('calendar')}
+        >
+          Mood Calendar
+        </button>
+        <button 
+          className={`nav-item ${activeComponent === 'journal' ? 'active' : ''}`} 
+          onClick={() => handleNavClick('journal')}
+        >
+          Journal
+        </button>
+      </div>
 
-          return (
-            <div
-              key={index}
-              className={`day ${isFlipped ? "flipped" : ""}`}
-              onClick={() => !isFlipped && handleDayClick(index, day)}
-            >
-              <div
-                className="day-inner"
-                style={{ backgroundColor: getDayColor(index) }}
-              >
-                <div className="day-front">
-                  {`${day.getDate()} ${monthNames[dayMonth]}`}
-                </div>
-                <div className="day-back">
-                  <div style={quizContainerStyle}>
-                    {isFlipped && (
-                      <MoodQuiz
-                        onClose={handleQuizClose}
-                        selectedDate={selectedDay}
-                      />
-                    )}
+      {/* Main Dashboard Content */}
+      <div className="dashboard-content">
+        {/* Emotion Overview Section */}
+        <div className={`dashboard-section emotion-overview-section ${
+          (activeComponent === 'overview' || !mobileView) ? 'visible' : 'hidden'
+        }`}>
+          <EmotionOverview moods={moods} />
+        </div>
+
+        {/* Calendar Section */}
+        {(activeComponent === 'calendar' || !mobileView) && (
+          <div className="dashboard-section calendar-section">
+            <div className="days-grid">
+              {[...Array(9)].map((_, index) => {
+                const day = new Date();
+                day.setDate(now.getDate() + index);
+                const dayMonth = day.getMonth();
+
+                return (
+                  <div
+                    key={index}
+                    className="day"
+                    onClick={() => handleDayClick(index, day)}
+                    style={{ backgroundColor: getDayColor(index) }}
+                  >
+                    <div className="day-content">
+                      {`${day.getDate()} ${monthNames[dayMonth]}`}
+                    </div>
                   </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
-          );
-        })}
+          </div>
+        )}
+
+        {/* Active Quiz - Shown when a day is selected */}
+        {activeComponent === 'quiz' && selectedDay && (
+          <div className="dashboard-section quiz-section">
+            <div className="section-header">
+              <h3>How do you feel on {selectedDay.getDate()} {monthNames[selectedDay.getMonth()]}?</h3>
+              <button className="close-btn" onClick={handleQuizClose}>×</button>
+            </div>
+            <div className="quiz-container">
+              <MoodQuiz
+                onComplete={handleQuizComplete}
+                onClose={handleQuizClose}
+                selectedDate={selectedDay}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Journal Section */}
+        {(activeComponent === 'journal' || !mobileView) && (
+          <div className="dashboard-section journal-section">
+            <Journal />
+          </div>
+        )}
       </div>
-      <div className="right-container">
-      <div className="emotion-overview">
-      <EmotionOverview moods={moods} /></div>
-      <div className="journal"> 
-      <Journal />
-      </div>
-      </div> 
     </div>
-    
   );
 }
