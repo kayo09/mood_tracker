@@ -5,7 +5,7 @@ Mood Calendar is designed to be an open-source competitor to Apple's journal app
 ![](https://github.com/kayo09/mood_tracker/blob/development/assets/Mood%20Calendar/features.png)
 
 # 👾 Demo
-find the live ![DEMO](https://mood-tracker-liart.vercel.app/)<br>
+find the live [DEMO](https://mood-tracker-liart.vercel.app/)<br>
 **NOTE**: you might fail aftter registering since the server might be sleeping, but it still registers you. so you can just login. Remember it is hosted on free platform so it might be inactive.
 
 ## Get started
