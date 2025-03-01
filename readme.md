@@ -20,5 +20,5 @@ Please don't forget to set up a .env file to store the various credentials requi
 
 
 # ☕️ Sponsor me 
-![sponsor](https://github.com/sponsors/kayo09)
+[sponsor](https://github.com/sponsors/kayo09)
 
